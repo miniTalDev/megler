@@ -146,7 +146,7 @@ def get_pdf_url(url):
     options = Options()
     options.add_argument('--disable-gpu')
     options.add_argument('--headless')
-    driver = webdriver.Chrome(options=options)
+    driver = get_driver()
     try:
         driver.get(url)
         wait = WebDriverWait(driver, 30)
