@@ -146,13 +146,13 @@ def get_pdf_url(url):
                                 <img src="https://raw.githubusercontent.com/miniTalDev/megler/master/reading.gif" alt="reading.gif" style="width: 500px; height: 500px;">
                             </div>
                             """
-    # options = Options()
-    # options.add_argument('--disable-gpu')
-    # options.add_argument('--headless')
+    options = Options()
+    options.add_argument('--disable-gpu')
+    options.add_argument('--headless')
 
-    # driver = get_driver()
+    driver = get_driver()
     # driver = uc.Chrome(headless=True,use_subprocess=False)
-    driver = uc.Chrome()
+    
     try:
         driver.get(url)
         wait = WebDriverWait(driver, 30)
