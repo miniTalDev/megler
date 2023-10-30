@@ -1,5 +1,7 @@
 import streamlit as st
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -132,11 +134,8 @@ def handle_userinput(user_question):
         st.warning("Please upload a PDF before asking questions.")
 
 @st.experimental_singleton
-def installff():
-  os.system('sbase install geckodriver')
-  os.system('ln -s /home/appuser/venv/lib/python3.7/site-packages/seleniumbase/drivers/geckodriver /home/appuser/venv/bin/geckodriver')
-
-_ = installff()
+def get_driver():
+    return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 def get_pdf_url(url):
     st.session_state.gif ="""
@@ -144,10 +143,10 @@ def get_pdf_url(url):
                                             <img src="https://raw.githubusercontent.com/miniTalDev/megler/master/reading.gif" alt="reading.gif" style="width: 500px; height: 500px;">
                                         </div>
                                         """
-    from selenium.webdriver import FirefoxOptions
-    opts = FirefoxOptions()
-    opts.add_argument("--headless")
-    driver = webdriver.Firefox(options=opts)
+    options = Options()
+    options.add_argument('--disable-gpu')
+    options.add_argument('--headless')
+    driver = webdriver.Chrome(options=options)
     try:
         driver.get(url)
         wait = WebDriverWait(driver, 30)
