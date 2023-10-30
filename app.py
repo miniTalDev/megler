@@ -151,7 +151,8 @@ def get_pdf_url(url):
     # options.add_argument('--headless')
 
     # driver = get_driver()
-    driver = uc.Chrome(headless=True,use_subprocess=False)
+    # driver = uc.Chrome(headless=True,use_subprocess=False)
+    driver = uc.Chrome()
     try:
         driver.get(url)
         wait = WebDriverWait(driver, 30)
