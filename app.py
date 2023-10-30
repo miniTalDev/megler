@@ -2,6 +2,7 @@ import streamlit as st
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+import undetected_chromedriver as uc
 from webdriver_manager.core.os_manager import ChromeType
 from selenium.webdriver.chrome import service as fs
 from selenium.webdriver.support.ui import WebDriverWait
@@ -145,11 +146,12 @@ def get_pdf_url(url):
                                 <img src="https://raw.githubusercontent.com/miniTalDev/megler/master/reading.gif" alt="reading.gif" style="width: 500px; height: 500px;">
                             </div>
                             """
-    options = Options()
-    options.add_argument('--disable-gpu')
-    options.add_argument('--headless')
+    # options = Options()
+    # options.add_argument('--disable-gpu')
+    # options.add_argument('--headless')
 
-    driver = get_driver()
+    # driver = get_driver()
+    driver = uc.Chrome(headless=True,use_subprocess=False)
     try:
         driver.get(url)
         wait = WebDriverWait(driver, 30)
