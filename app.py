@@ -130,16 +130,24 @@ def handle_userinput(user_question):
             st.error(f"An error occurred: {str(e)}")
     else:
         st.warning("Please upload a PDF before asking questions.")
-    
+
+@st.experimental_singleton
+def installff():
+  os.system('sbase install geckodriver')
+  os.system('ln -s /home/appuser/venv/lib/python3.7/site-packages/seleniumbase/drivers/geckodriver /home/appuser/venv/bin/geckodriver')
+
+_ = installff()
+
 def get_pdf_url(url):
     st.session_state.gif ="""
                                         <div style="display: flex; justify-content: center;">
                                             <img src="https://raw.githubusercontent.com/miniTalDev/megler/master/reading.gif" alt="reading.gif" style="width: 500px; height: 500px;">
                                         </div>
                                         """
-    options = Options()
-    options.add_argument('--headless')
-    driver = webdriver.Chrome(options=options)
+    from selenium.webdriver import FirefoxOptions
+    opts = FirefoxOptions()
+    opts.add_argument("--headless")
+    driver = webdriver.Firefox(options=opts)
     try:
         driver.get(url)
         wait = WebDriverWait(driver, 30)
