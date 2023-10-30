@@ -506,7 +506,7 @@ with row1_col2:
         if response.status_code == 200:
             pdf_content = response.content
         base64_pdf = base64.b64encode(pdf_content).decode('utf-8')
-        images = convert_from_bytes(pdf_content, poppler_path=r'C:\Program Files (x86)\Release-23.10.0-0\poppler-23.10.0\Library\bin')
+        images = convert_from_bytes(pdf_content)
         st.image(images[0])  # display the first page of the PDF as an image 
         st.markdown(f"""
         <a href="{pdf_link}" target="_self">
@@ -538,7 +538,7 @@ with row1_col2:
     if pdf_source:
         base64_pdf = base64.b64encode(pdf_source[0].getvalue()).decode('utf-8')
         pdf_source[0].seek(0)
-        images = convert_from_bytes(pdf_source[0].getvalue(),poppler_path=r'C:\Program Files (x86)\Release-23.10.0-0\poppler-23.10.0\Library\bin')
+        images = convert_from_bytes(pdf_source[0].getvalue())
         st.image(images[0]) 
 
         # Embedding PDF in HTML
