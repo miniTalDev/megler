@@ -1,2 +1,3 @@
 poppler-utils
 chromium
+chromium-driver
