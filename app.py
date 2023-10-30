@@ -2,6 +2,8 @@ import streamlit as st
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.core.os_manager import ChromeType
+from selenium.webdriver.chrome import service as fs
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -139,14 +141,19 @@ def get_driver():
 
 def get_pdf_url(url):
     st.session_state.gif ="""
-                                        <div style="display: flex; justify-content: center;">
-                                            <img src="https://raw.githubusercontent.com/miniTalDev/megler/master/reading.gif" alt="reading.gif" style="width: 500px; height: 500px;">
-                                        </div>
-                                        """
+                            <div style="display: flex; justify-content: center;">
+                                <img src="https://raw.githubusercontent.com/miniTalDev/megler/master/reading.gif" alt="reading.gif" style="width: 500px; height: 500px;">
+                            </div>
+                            """
     options = Options()
+    ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"
+    options.add_argument('--user-agent=' + ua)
+    options.add_argument("--headless")
     options.add_argument('--disable-gpu')
-    options.add_argument('--headless')
-    driver = get_driver()
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    chrome_service = fs.Service(executable_path=ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
+    driver = webdriver.Chrome(options=options,service=chrome_service)
     try:
         driver.get(url)
         wait = WebDriverWait(driver, 30)
