@@ -70,7 +70,7 @@ def get_text_chunks(text):
 
 def get_vectorstore(text_chunks):
     
-    embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
+    embeddings = OpenAIEmbeddings(openai_api_key=st.secrets["OPENAI_API_KEY"])
     vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embeddings)
     return vectorstore
 
@@ -90,7 +90,7 @@ Kommunikasjon: Svar presist, kortfattet, og med fokus på detaljene. Enhver lite
         ]
     qa_prompt = ChatPromptTemplate.from_messages(messages)
 
-    llm = ChatOpenAI(openai_api_key=openai_api_key, model_name='gpt-3.5-turbo', temperature=0.8)
+    llm = ChatOpenAI(openai_api_key=st.secrets["OPENAI_API_KEY"], model_name='gpt-3.5-turbo', temperature=0.8)
     memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
 
     combine_docs_chain_kwargs = {
@@ -271,8 +271,8 @@ row1_col1, row1_col2, row1_col3 , row1_col4, row1_col5, row1_col6 = st.columns([
 row2_col1, row2_col2 = st.columns([4,7])
 
 
-load_dotenv()
-openai_api_key = os.getenv('OPENAI_API_KEY')
+# load_dotenv()
+# openai_api_key = os.getenv('OPENAI_API_KEY')
 st.markdown(expander, unsafe_allow_html=True)
 st.write(css, unsafe_allow_html=True)
 
