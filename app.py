@@ -33,22 +33,22 @@ st.set_page_config(
     layout="wide",
 )
 
-STREAMLIT_STATIC_PATH = pathlib.Path(st.__path__[0]) / 'static'
-IMG_PATH = (STREAMLIT_STATIC_PATH / "assets" / "image")
-if not IMG_PATH.is_dir():
-    IMG_PATH.mkdir()
+# STREAMLIT_STATIC_PATH = pathlib.Path(st.__path__[0]) / 'static'
+# IMG_PATH = (STREAMLIT_STATIC_PATH / "assets" / "image")
+# if not IMG_PATH.is_dir():
+#     IMG_PATH.mkdir()
 
-for image_filename in ["crying.gif", 
-                       "glad.gif", 
-                       "neutral.gif", 
-                       "reading.gif", 
-                       "sleeping.gif",
-                       "smiling.gif",
-                       "welcoming.gif",
-                       "vinke.gif"]:
-    image_path = IMG_PATH / image_filename
-    if not image_path.exists():
-        shutil.copy(image_filename, image_path)
+# for image_filename in ["crying.gif", 
+#                        "glad.gif", 
+#                        "neutral.gif", 
+#                        "reading.gif", 
+#                        "sleeping.gif",
+#                        "smiling.gif",
+#                        "welcoming.gif",
+#                        "vinke.gif"]:
+#     image_path = IMG_PATH / image_filename
+#     if not image_path.exists():
+#         shutil.copy(image_filename, image_path)
 
 
 def get_pdf_text(pdf_docs):
@@ -70,7 +70,7 @@ def get_text_chunks(text):
     return chunks
 
 def get_vectorstore(text_chunks):
-    openai_api_key = os.getenv('OPENAI_API_KEY')
+    
     embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
     vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embeddings)
     return vectorstore
@@ -91,7 +91,7 @@ Kommunikasjon: Svar presist, kortfattet, og med fokus på detaljene. Enhver lite
         ]
     qa_prompt = ChatPromptTemplate.from_messages(messages)
 
-    llm = ChatOpenAI(openai_api_key='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', model_name='gpt-3.5-turbo', temperature=0.8)
+    llm = ChatOpenAI(openai_api_key=openai_api_key, model_name='gpt-3.5-turbo', temperature=0.8)
     memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
 
     combine_docs_chain_kwargs = {
@@ -134,7 +134,7 @@ def handle_userinput(user_question):
 def get_pdf_url(url):
     st.session_state.gif ="""
                                         <div style="display: flex; justify-content: center;">
-                                            <img src="assets/image/reading.gif" alt="reading.gif" style="width: 500px; height: 500px;">
+                                            <img src="https://raw.githubusercontent.com/miniTalDev/megler/main/reading.gif" alt="reading.gif" style="width: 500px; height: 500px;">
                                         </div>
                                         """
     driver = webdriver.Chrome()
@@ -273,6 +273,7 @@ row2_col1, row2_col2 = st.columns([4,7])
 
 
 load_dotenv()
+openai_api_key = os.getenv('OPENAI_API_KEY')
 st.markdown(expander, unsafe_allow_html=True)
 st.write(css, unsafe_allow_html=True)
 
@@ -300,11 +301,11 @@ def clear_input():
 def start_loading():
     gif = """
             <div style="display: flex; justify-content: center;">
-                <img id="chatbot-status" src="assets/image/vinke.gif" alt="vinke.gif" style="width: 500px; height: 500px;">
+                <img id="chatbot-status" src="https://raw.githubusercontent.com/miniTalDev/megler/main/vinke.gif" alt="vinke.gif" style="width: 500px; height: 500px;">
             </div>
             <script>
             setTimeout(function() {
-                document.getElementById("chatbot-status").src = "assets/image/sleeping.gif";
+                document.getElementById("chatbot-status").src = "https://raw.githubusercontent.com/miniTalDev/megler/main/sleeping.gif";
             }, 4 * 60 * 100); // 4 minutes in milliseconds
             </script>
             """
@@ -335,7 +336,7 @@ with row2_col2:
             
         st.session_state.gif ="""
                 <div style="display: flex; justify-content: center;">
-                    <img src="assets/image/glad.gif" alt="glad.gif" style="width: 500px; height: 500px;">
+                    <img src="https://raw.githubusercontent.com/miniTalDev/megler/main/glad.gif" alt="glad.gif" style="width: 500px; height: 500px;">
                 </div>
                 """
  
@@ -354,7 +355,7 @@ with row1_col5:
     if selected_option == "Last opp PDF":
         st.session_state.gif = """
                             <div style="display: flex; justify-content: center;">
-                                <img src="assets/image/welcoming.gif" alt="welcoming.gif" style="width: 500px; height: 500px;">
+                                <img src="https://raw.githubusercontent.com/miniTalDev/megler/main/welcoming.gif" alt="welcoming.gif" style="width: 500px; height: 500px;">
                             </div>
                             """
         pdf_docs = st.file_uploader(
@@ -366,7 +367,7 @@ with row1_col5:
         if pdf_docs and not user_question:
             st.session_state.gif = """
                             <div style="display: flex; justify-content: center;">
-                                <img src="assets/image/welcoming.gif" alt="welcoming.gif" style="width: 500px; height: 500px;">
+                                <img src="https://raw.githubusercontent.com/miniTalDev/megler/main/welcoming.gif" alt="welcoming.gif" style="width: 500px; height: 500px;">
                             </div>
                             """
 
@@ -374,7 +375,7 @@ with row1_col5:
             # with st.spinner("Behandling..."):
                 st.session_state.gif = """
                         <div style="display: flex; justify-content: center;">
-                            <img src="assets/image/reading.gif" alt="reading.gif" style="width: 500px; height: 500px;">
+                            <img src="https://raw.githubusercontent.com/miniTalDev/megler/main/reading.gif" alt="reading.gif" style="width: 500px; height: 500px;">
                         </div>
                         """
 
@@ -398,34 +399,34 @@ with row1_col5:
 
                         st.session_state.gif ="""
                                 <div style="display: flex; justify-content: center;">
-                                    <img src="assets/image/glad.gif" alt="glad.gif" style="width: 500px; height: 500px;">
+                                    <img src="https://raw.githubusercontent.com/miniTalDev/megler/main/glad.gif" alt="glad.gif" style="width: 500px; height: 500px;">
                                 </div>
                                 """
                     except Exception as e:
                         st.session_state.gif = """
                             <div style="display: flex; justify-content: center;">
-                                <img src="assets/image/crying.gif" alt="crying.gif" style="width: 500px; height: 500px;">
+                                <img src="https://raw.githubusercontent.com/miniTalDev/megler/main/crying.gif" alt="crying.gif" style="width: 500px; height: 500px;">
                             </div>
                             """
                         st.error(f"Det oppstod en feil under behandling av PDF-filer: {str(e)}")
                 else:
                     st.session_state.gif = """
                             <div style="display: flex; justify-content: center;">
-                                <img src="assets/image/crying.gif" alt="crying.gif" style="width: 500px; height: 500px;">
+                                <img src="https://raw.githubusercontent.com/miniTalDev/megler/main/crying.gif" alt="crying.gif" style="width: 500px; height: 500px;">
                             </div>
                             """
                     st.warning("Vennligst last opp én eller flere PDF-er før du klikker på Behandle.")
     else:
         st.session_state.gif = """
                             <div style="display: flex; justify-content: center;">
-                                <img src="assets/image/welcoming.gif" alt="welcoming.gif" style="width: 500px; height: 500px;">
+                                <img src="https://raw.githubusercontent.com/miniTalDev/megler/main/welcoming.gif" alt="welcoming.gif" style="width: 500px; height: 500px;">
                             </div>
                             """
         url = st.text_input("Skriv inn nettstedets URL og klikk på Hent PDF:")
         if search_button:
             st.session_state.gif ="""
                                         <div style="display: flex; justify-content: center;">
-                                            <img src="assets/image/reading.gif" alt="reading.gif" style="width: 500px; height: 500px;">
+                                            <img src="https://raw.githubusercontent.com/miniTalDev/megler/main/reading.gif" alt="reading.gif" style="width: 500px; height: 500px;">
                                         </div>
                                         """
             if url:
@@ -435,7 +436,7 @@ with row1_col5:
                     pdf_link = get_pdf_url(url)
                     st.session_state.gif ="""
                                         <div style="display: flex; justify-content: center;">
-                                            <img src="assets/image/reading.gif" alt="reading.gif" style="width: 500px; height: 500px;">
+                                            <img src="https://raw.githubusercontent.com/miniTalDev/megler/main/reading.gif" alt="reading.gif" style="width: 500px; height: 500px;">
                                         </div>
                                         """
                     st.session_state.pdf_link = pdf_link
@@ -443,7 +444,7 @@ with row1_col5:
                         
                         st.session_state.gif ="""
                                         <div style="display: flex; justify-content: center;">
-                                            <img src="assets/image/glad.gif" alt="glad.gif" style="width: 500px; height: 500px;">
+                                            <img src="https://raw.githubusercontent.com/miniTalDev/megler/main/glad.gif" alt="glad.gif" style="width: 500px; height: 500px;">
                                         </div>
                                         """
                         pdf_text = get_pdf_text_from_url(pdf_link)
@@ -462,14 +463,14 @@ with row1_col5:
 
                                 st.session_state.gif ="""
                                         <div style="display: flex; justify-content: center;">
-                                            <img src="assets/image/glad.gif" alt="glad.gif" style="width: 500px; height: 500px;">
+                                            <img src="https://raw.githubusercontent.com/miniTalDev/megler/main/glad.gif" alt="glad.gif" style="width: 500px; height: 500px;">
                                         </div>
                                         """
                             except Exception as e:
 
                                 st.session_state.gif = """
                                     <div style="display: flex; justify-content: center;">
-                                        <img src="assets/image/crying.gif" alt="crying.gif" style="width: 500px; height: 500px;">
+                                        <img src="https://raw.githubusercontent.com/miniTalDev/megler/main/crying.gif" alt="crying.gif" style="width: 500px; height: 500px;">
                                     </div>
                                     """
                                 st.error(f"Det oppstod en feil under behandling av PDF-filer: {str(e)}")
@@ -477,21 +478,21 @@ with row1_col5:
 
                             st.session_state.gif = """
                                     <div style="display: flex; justify-content: center;">
-                                        <img src="assets/image/crying.gif" alt="crying.gif" style="width: 500px; height: 500px;">
+                                        <img src="https://raw.githubusercontent.com/miniTalDev/megler/main/crying.gif" alt="crying.gif" style="width: 500px; height: 500px;">
                                     </div>
                                     """
                             st.error("Kunne ikke hente PDF fra nettadressen.")
                     else:
                         st.session_state.gif = """
                                     <div style="display: flex; justify-content: center;">
-                                        <img src="assets/image/crying.gif" alt="crying.gif" style="width: 500px; height: 500px;">
+                                        <img src="https://raw.githubusercontent.com/miniTalDev/megler/main/crying.gif" alt="crying.gif" style="width: 500px; height: 500px;">
                                     </div>
                                     """
                         st.error("PDF-lenke ikke funnet.")
             else:
                 st.session_state.gif = """
                                 <div style="display: flex; justify-content: center;">
-                                    <img src="assets/image/crying.gif" alt="crying.gif" style="width: 500px; height: 500px;">
+                                    <img src="https://raw.githubusercontent.com/miniTalDev/megler/main/crying.gif" alt="crying.gif" style="width: 500px; height: 500px;">
                                 </div>
                                 """
                 st.warning("Vennligst skriv inn lenken før du klikker på Upload.")
@@ -592,7 +593,7 @@ with row2_col1:
 #         # Set the gif to display the sleeping gif
 #         gif = """
 #             <div style="display: flex; justify-content: center;">
-#             <img src="assets/image/sleeping.gif" alt="sleeping.gif" style="width: 500px; height: 500px;">
+#             <img src="https://raw.githubusercontent.com/miniTalDev/megler/main/sleeping.gif" alt="sleeping.gif" style="width: 500px; height: 500px;">
 #             </div>
 #             """
 #         # Update the last activity time to the current time
