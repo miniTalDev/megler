@@ -520,7 +520,7 @@ with row1_col5:
 with row1_col2:
     pdf_link = st.session_state.pdf_link
 
-    if pdf_link:     
+    if search_button and pdf_link:     
         # response = requests.get(pdf_link)
         # if response.status_code == 200:
         #     pdf_content = response.content
@@ -553,7 +553,7 @@ with row1_col2:
 
         
     pdf_source = st.session_state.pdf_source
-    if pdf_source:
+    if upload_button and pdf_source:
         base64_pdf = base64.b64encode(pdf_source[0].getvalue()).decode('utf-8')
         pdf_source[0].seek(0)
         images = convert_from_bytes(pdf_source[0].getvalue())
