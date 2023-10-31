@@ -553,45 +553,45 @@ with row1_col2:
 
         
     pdf_source = st.session_state.pdf_source
-    if upload_button :
-        if pdf_source:
-            base64_pdf = base64.b64encode(pdf_source[0].getvalue()).decode('utf-8')
-            pdf_source[0].seek(0)
-            images = convert_from_bytes(pdf_source[0].getvalue())
-            st.image(images[0]) 
+    if selected_option == "Last opp PDF" and pdf_source:
+        
+        base64_pdf = base64.b64encode(pdf_source[0].getvalue()).decode('utf-8')
+        pdf_source[0].seek(0)
+        images = convert_from_bytes(pdf_source[0].getvalue())
+        st.image(images[0]) 
 
-            # Embedding PDF in HTML
-            pdf_display =  f"""<embed
-            class="pdfobject"
-            type="application/pdf"
-            title="Embedded PDF"
-            src="data:application/pdf;base64,{base64_pdf}"
-            style="overflow: auto; width: 100%; height: 100%;">"""
+        # Embedding PDF in HTML
+        pdf_display =  f"""<embed
+        class="pdfobject"
+        type="application/pdf"
+        title="Embedded PDF"
+        src="data:application/pdf;base64,{base64_pdf}"
+        style="overflow: auto; width: 100%; height: 100%;">"""
 
-            # Displaying File
-            # st.markdown(pdf_display, unsafe_allow_html=True)
-            st.markdown(f"""
-            <a href="{base64_pdf}" target="_self">
-                <div style="display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            width: 100%;
-                            height: 100%;
-                            padding: 0.5em 1em;
-                            color: #FFFFFF;
-                            background-color: #007272;
-                            border-radius: 3px;
-                            text-decoration: none;
-                            cursor: pointer;
-                            border: none;
-                            font-size: 1rem;
-                            outline: none;">
-                    Se salgsoppgave
-                </div>
-            </a>
-            """,
-            unsafe_allow_html=True
-            )
+        # Displaying File
+        # st.markdown(pdf_display, unsafe_allow_html=True)
+        st.markdown(f"""
+        <a href="{base64_pdf}" target="_self">
+            <div style="display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        width: 100%;
+                        height: 100%;
+                        padding: 0.5em 1em;
+                        color: #FFFFFF;
+                        background-color: #007272;
+                        border-radius: 3px;
+                        text-decoration: none;
+                        cursor: pointer;
+                        border: none;
+                        font-size: 1rem;
+                        outline: none;">
+                Se salgsoppgave
+            </div>
+        </a>
+        """,
+        unsafe_allow_html=True
+        )
         
 
 with row2_col1:
