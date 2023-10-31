@@ -136,9 +136,9 @@ def handle_userinput(user_question):
     else:
         st.warning("Please upload a PDF before asking questions.")
 
-@st.experimental_singleton
-def get_driver():
-    return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+# @st.experimental_singleton
+# def get_driver():
+#     return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 def get_pdf_url(url):
     st.session_state.gif ="""
