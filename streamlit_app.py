@@ -391,6 +391,7 @@ with row1_col5:
                             """
 
         if upload_button:
+                st.session_state.pdf_link = None
             # with st.spinner("Behandling..."):
                 st.session_state.gif = """
                         <div style="display: flex; justify-content: center;">
@@ -443,6 +444,7 @@ with row1_col5:
                             """
         url = st.text_input("Skriv inn nettstedets URL og klikk på Hent PDF:")
         if search_button:
+            st.session_state.pdf_source = None
             st.session_state.gif ="""
                                         <div style="display: flex; justify-content: center;">
                                             <img src="https://raw.githubusercontent.com/miniTalDev/megler/master/reading.gif" alt="reading.gif" style="width: 500px; height: 500px;">
@@ -520,7 +522,7 @@ with row1_col5:
 with row1_col2:
     pdf_link = st.session_state.pdf_link
 
-    if search_button and pdf_link:     
+    if pdf_link:     
         # response = requests.get(pdf_link)
         # if response.status_code == 200:
         #     pdf_content = response.content
@@ -553,7 +555,7 @@ with row1_col2:
 
         
     pdf_source = st.session_state.pdf_source
-    if selected_option == "Last opp PDF" and pdf_source:
+    if pdf_source:
         
         base64_pdf = base64.b64encode(pdf_source[0].getvalue()).decode('utf-8')
         pdf_source[0].seek(0)
