@@ -521,12 +521,11 @@ with row1_col2:
     pdf_link = st.session_state.pdf_link
 
     if pdf_link:     
-        # response = requests.get(pdf_link)
-        # if response.status_code == 200:
-        #     pdf_content = response.content
-        # base64_pdf = base64.b64encode(pdf_content).decode('utf-8')
-        # images = convert_from_bytes(pdf_content)
-        # st.image(images[0])  # display the first page of the PDF as an image 
+        response = requests.get(pdf_link)
+        if response.status_code == 200:
+            pdf_content = response.content
+            images = convert_from_bytes(pdf_content)
+            st.image(images[0])  # display the first page of the PDF as an image 
         st.markdown(f"""
         <a href="{pdf_link}" target="_self">
             <div style="display: flex;
